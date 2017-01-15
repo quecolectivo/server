@@ -1,0 +1,15 @@
+ version: '2'
+ services:
+   db:
+     image: mdillon/postgis
+     restart: always
+   server:
+     restart: always
+     build: .
+     command: python quecolectivo/manage.py runserver 0.0.0.0:8000
+     ports:
+       - "8000:8000"
+     depends_on:
+       - db
+     links:
+       - db
