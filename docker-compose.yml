@@ -1,8 +1,9 @@
  version: '2'
  services:
    db:
-     image: mdillon/postgis
+     build: db
      restart: always
+     
    server:
      restart: always
      build: .
