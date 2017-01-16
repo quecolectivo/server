@@ -18,8 +18,6 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
     lng_orig, lat_orig, lng_dest, lat_dest = map(float, [lng_orig, lat_orig, lng_dest, lat_dest])
     rad = int(rad)
 
-    print(lat_orig, lat_dest, lng_orig, lng_dest, rad)
-
     p1 = GeoPoint(lng_orig, lat_orig, srid=4326)
     p2 = GeoPoint(lng_dest, lat_dest, srid=4326)
 
@@ -35,7 +33,6 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
             ORDER BY (st_distance(way, st_transform(st_geomfromewkt(%(p1)s), 3857)) +
             st_distance(way, st_transform(st_geomfromewkt(%(p2)s), 3857)))
         """
-        t1 = timer()
         cursor.execute(query, {'p1': p1.ewkt, 'p2': p2.ewkt, 'r': rad})
         results = cursor.fetchall()[:20]
         lines = list(map(lambda r: dict(zip(['pid', 'ref', 'name', 'geojson'], r)), results))
@@ -60,7 +57,6 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
     # results = Line.objects.filter(within(p1, rad) & within(p2, rad), route='bus')
     # lineas = [result.ref for result in results]
 
-    print(timer() - t1)
     return JsonResponse({'results': lines})
 
 
