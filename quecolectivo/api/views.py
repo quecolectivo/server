@@ -18,6 +18,8 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
     lng_orig, lat_orig, lng_dest, lat_dest = map(float, [lng_orig, lat_orig, lng_dest, lat_dest])
     rad = int(rad)
 
+    print(lat_orig, lat_dest, lng_orig, lng_dest, rad)
+
     p1 = GeoPoint(lng_orig, lat_orig, srid=4326)
     p2 = GeoPoint(lng_dest, lat_dest, srid=4326)
 
