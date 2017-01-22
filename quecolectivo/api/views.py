@@ -31,7 +31,7 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
             AND st_dwithin(way, st_transform(st_geomfromewkt(%(p1)s), 3857), %(r)s)
             AND st_dwithin(way, st_transform(st_geomfromewkt(%(p2)s), 3857), %(r)s)
             ORDER BY (st_distance(way, st_transform(st_geomfromewkt(%(p1)s), 3857)) +
-            st_distance(way, st_transform(st_geomfromewkt(%(p2)s), 3857)))
+            st_distance(way, st_transform(st_geomfromewkt(%(p2)s), 3857))) DESC, pid
         """
         cursor.execute(query, {'p1': p1.ewkt, 'p2': p2.ewkt, 'r': rad})
         results = cursor.fetchall()[:20]
