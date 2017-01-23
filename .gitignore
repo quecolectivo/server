@@ -6,3 +6,4 @@ gis
 .python-version
 .idea
 .vscode
+settings_secret.py
