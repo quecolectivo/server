@@ -3,4 +3,6 @@ into bus_routes
 from planet_osm_line 
 where route='bus' 
 group by osm_id, ref, name 
-order by osm_id
+order by osm_id;
+
+create index bus_routes_idx on bus_routes using gist(way)

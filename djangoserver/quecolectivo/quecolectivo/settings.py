@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'quecolectivo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'laplata',
-        'USER': 'fede',
-        'HOST': 'localhost'
-    }
+        'NAME': os.environ.get('POSTGRES_DATABASE', ''),
+        'USER': os.environ.get('POSTGRES_USER', ''),
+        'HOST': os.environ.get('POSTGRES_HOST', '')
+    },
 }
 
 # Password validation

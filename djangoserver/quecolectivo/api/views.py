@@ -26,17 +26,19 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
         query = """
             SELECT osm_id, ref, name,
             st_asgeojson(st_transform(way, 4326)) as geojson
-            FROM bus_routes2
+            FROM bus_routes
             WHERE st_dwithin(way, st_transform(st_geomfromewkt(%(p1)s), 3857), %(r)s)
             AND st_dwithin(way, st_transform(st_geomfromewkt(%(p2)s), 3857), %(r)s)
             ORDER BY (st_distance(way, st_transform(st_geomfromewkt(%(p1)s), 3857)) +
             st_distance(way, st_transform(st_geomfromewkt(%(p2)s), 3857))) DESC, osm_id
         """
         cursor.execute(query, {'p1': p1.ewkt, 'p2': p2.ewkt, 'r': rad})
-        results = cursor.fetchall()[:20]
-        lines = list(map(lambda r: dict(zip(['osm_id', 'ref', 'name', 'geojson'], r)), results))
+        results = cursor.fetchall()
+        lines = {
+            "byId": {r[0]: dict(zip(['osm_id', 'ref', 'name', 'geojson'], r)) for r in results},
+            "allIds": [result[0] for result in results]
+            }
 
-        # lineas = [dict(zip(['pid', 'ref', 'name'], result)) for result in results]
     print((timer()-t1)*1000)
     # raw orm django
     # t1 = timer()

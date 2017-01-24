@@ -7,3 +7,4 @@ gis
 .idea
 .vscode
 settings_secret.py
+.env
