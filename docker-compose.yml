@@ -1,21 +1,29 @@
- version: '2'
- services:
-   db:
-     build: db
-     environment: 
-       -  POSTGRES_USER=postgres
-       -  POSTGRES_PASSWORD=fedefede
-     ports:
-       - "5432:5432"
+version: '2'
+services:
+  db:
+    build: db
+    restart: always
+    environment: 
+      -  POSTGRES_USER=postgres
+      -  POSTGRES_PASSWORD=fedefede
+    ports:
+      - "5432:5432"
+    volumes: 
+      - datavolume:/var/lib/postgresql/data 
      
-   server:
-     build: .
-     environment:
-       -  PGPASSWORD=fedefede
-     ports:
-       - "8000:8000"
-     depends_on:
-       - db
-     links:
-       - db
-     command: bash wait-for-postgres.sh db python manage.py runserver 0.0.0.0:8000
+  django:
+    build: django
+    restart: always
+    environment:
+      -  PGPASSWORD=fedefede
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    links:
+      - db
+    volumes: 
+      - ./django/quecolectivo:/code/quecolectivo
+    command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
+volumes:
+  datavolume:
