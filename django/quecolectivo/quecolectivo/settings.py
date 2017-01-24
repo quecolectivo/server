@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'quecolectivo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'argentina',
+        'NAME': 'laplata',
         'USER': 'fede',
         'HOST': 'localhost'
     }
