@@ -20,13 +20,13 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
 
     p1 = GeoPoint(lng_orig, lat_orig, srid=4326)
     p2 = GeoPoint(lng_dest, lat_dest, srid=4326)
-
+    t1 = timer()
     # raw sql
     with connection.cursor() as cursor:
         query = """
             SELECT osm_id, ref, name,
             st_asgeojson(st_transform(way, 4326)) as geojson
-            FROM bus_routes
+            FROM bus_routes2
             WHERE st_dwithin(way, st_transform(st_geomfromewkt(%(p1)s), 3857), %(r)s)
             AND st_dwithin(way, st_transform(st_geomfromewkt(%(p2)s), 3857), %(r)s)
             ORDER BY (st_distance(way, st_transform(st_geomfromewkt(%(p1)s), 3857)) +
@@ -37,7 +37,7 @@ def search(request, lng_orig, lat_orig, lng_dest, lat_dest, rad):
         lines = list(map(lambda r: dict(zip(['osm_id', 'ref', 'name', 'geojson'], r)), results))
 
         # lineas = [dict(zip(['pid', 'ref', 'name'], result)) for result in results]
-
+    print((timer()-t1)*1000)
     # raw orm django
     # t1 = timer()
     # results = Line.objects.raw(
