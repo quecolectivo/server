@@ -16,7 +16,7 @@ services:
     restart: always
     environment:
       -  PGPASSWORD=fedefede
-      -  POSTGRES_DATABASE=laplata
+      -  POSTGRES_DATABASE=postgres
       -  POSTGRES_USER=postgres
       -  POSTGRES_HOST=db
     ports:
