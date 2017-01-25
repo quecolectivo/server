@@ -1,7 +1,9 @@
 version: '2'
 services:
   db:
-    extends: docker-compose-common.yml
+    extends:
+      file: docker-compose-common.yml
+      service: db
     # Publish the port so it's visible on the host, you can access the db directly
     expose:
     # Expose port 5432 so it's only visibile on the container, not the host
@@ -10,7 +12,9 @@ services:
       - datavolume:/var/lib/postgresql/data 
      
   django:
-    extends: docker-compose-common.yml
+    extends:
+      file: docker-compose-common.yml
+      service: django
     environment:
     # Environment variables to configure pgsql on startup.
     # Environment variables with only a key are resolved to their values on
@@ -28,16 +32,14 @@ services:
       - db
     links:
       - db
-    volumes:
-    # Mount the app dir in the container so our changes to the app code
-    # are also changed in the container
-      - ./djangoserver/quecolectivo:/code/quecolectivo
     command: bash wait-for-postgres.sh db gunicorn -w 8 --reload --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
     # Run Gunicorn to serve app requests and reload on change so we can see our
     # changes to the app code
 
   nginx:
-    extends: docker-compose-common.yml
+    extends:
+      file: docker-compose-common.yml
+      service: nginx
     ports:
       - 80:80
     links:
