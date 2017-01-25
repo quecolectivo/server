@@ -41,7 +41,7 @@ services:
       file: docker-compose-common.yml
       service: nginx
     ports:
-      - 80:80
+      - "80:80"
     links:
       - django
 
