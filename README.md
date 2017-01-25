@@ -3,18 +3,8 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/quecolectivo/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-### create the following .env files on your system containing sensible information:
+### create the following files on your system containing sensible information:
 
- - djangoserver/.env
- 
-    ```
-   DJANGO_SETTINGS_MODULE=quecolectivo.settings
-   POSTGRES_DATABASE=<db-name> # name of the db
-   POSTGRES_USER=postgres # db user
-   POSTGRES_HOST=db # db for docker, or localhost if you are developing locally
-   PGPASSWORD=<yourpassword> # password here
-   ```
-   
 - djangoserver/quecolectivo/quecolectivo/settings_secret.py
 
     ```
@@ -23,13 +13,20 @@
 
 ### Docker dev setup assuming you have `docker` and `docker-compose` already installed on your system:
     
+- `docker-compose build`
+
+    downloads the images and builds the container
+
 - `docker-compose run --rm django bash initdb/init.sh` 
 
     this populates the db with data and sets up postgis. change the default .osm file accordingly for whatever zone you prefer, as well as the db name, etc.
-- `docker-compose run --rm django python quecolectivo/manage.py makemigrations`    
-- `docker-compose run --rm django python quecolectivo/manage.py migrate`    
+
+#### do not run this migrations for now:
+- ~~`docker-compose run --rm django python quecolectivo/manage.py makemigrations`~~   
+- ~~`docker-compose run --rm django python quecolectivo/manage.py migrate`~~    
 
     runs django migrations on the db, sets up django tables, etc.
+    
 - `docker-compose up`
 
     your project should be up on localhost:8000, you can try to make a query like:
@@ -40,7 +37,31 @@
 ### local dev setup:
     TODO
 
-### structure of the project 
+
+## deploy to production
+    
+- need to define the following env variables:
+    ```
+    POSTGRES_USER
+    PGPASSWORD
+    ```
+- create a new amazonec2 instance with  
+    `docker-machine create --driver amazonec2 --amazonec2-region sa-east-1 quecolectivo`
+
+- to connect to the remote docker container run  
+    `eval $(docker-machine env quecolectivo)`
+
+- continue similar to the dev setup but use the docker-compose-prod file
+    ```
+    docker-compose -f docker-compose-prod.yml build
+    
+    POSTGRES_USER= <your-user> PGPASSWORD= <your-pwd> docker-compose -f docker-compose-prod.yml run --rm django bash initdb/init.sh
+    
+    POSTGRES_USER= <your-user> PGPASSWORD= <your-pwd> docker-compose -f docker-compose-prod.yml up
+    ``` 
+
+
+### Project structure
 ```
 ├── LICENSE
 ├── README.md

@@ -1,4 +1,0 @@
-   ALTER TABLE planet_osm_point ADD COLUMN pid SERIAL PRIMARY KEY;
-   ALTER TABLE planet_osm_line ADD COLUMN pid SERIAL PRIMARY KEY;
-   ALTER TABLE planet_osm_roads ADD COLUMN pid SERIAL PRIMARY KEY;
-   ALTER TABLE planet_osm_polygon ADD COLUMN pid SERIAL PRIMARY KEY;
