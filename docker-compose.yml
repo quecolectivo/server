@@ -21,6 +21,6 @@ services:
       - db
     volumes: 
       - ./djangoserver/quecolectivo:/code/quecolectivo
-    command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
+    command: bash wait-for-postgres.sh db gunicorn -w 8 --reload --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
 volumes:
   datavolume:
