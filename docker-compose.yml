@@ -1,6 +1,9 @@
+version: '2'
 services:
   db:
-    extends: docker-compose-common.yml
+    extends:
+      file: docker-compose-common.yml
+      service: db
     # Publish the port so it's visible on the host, you can access the db directly
     ports:
       - "5432:5432"
@@ -8,16 +11,18 @@ services:
       - datavolume:/var/lib/postgresql/data 
      
   django:
-    extends: docker-compose-common.yml
+    extends:
+      file: docker-compose-common.yml
+      service: django
     environment:
     # Environment variables to configure PGSQL on startup.
     # We don't care about commiting these creds to GitHub because they're only
     # for our local development environment
       - DJANGO_SETTINGS_MODULE=quecolectivo.settings
       - POSTGRES_DATABASE=laplata
-      - POSTGRES_USER=fede
-      - POSTGRES_HOST=localhost
-      - PGPASSWORD=fedefede
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=db
+      - PGPASSWORD=postgres
     ports:
       - "8000:8000"
     depends_on:
@@ -28,12 +33,15 @@ services:
     # Mount the app dir in the container so our changes to the app code
     # are also changed in the container
       - ./djangoserver/quecolectivo:/code/quecolectivo
-    command: bash wait-for-postgres.sh db gunicorn -w 8 --reload --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
+    # command: bash wait-for-postgres.sh db gunicorn -w 8 --reload --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
+    command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
     # Run Gunicorn to serve app requests and reload on change so we can see our
     # changes to the app code
 
   nginx:
-    extends: docker-compose-common.yml
+    extends:
+      file: docker-compose-common.yml
+      service: nginx
     ports:
       - 80:80
     links:
