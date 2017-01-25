@@ -1,6 +1,6 @@
 ## Backend server for quecolectivo built on top of django.
 
-![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/quecolectivo/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/quecolectivo/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 ### create the following .env files on your system containing sensible information:
