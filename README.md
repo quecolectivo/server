@@ -6,6 +6,7 @@
 ### create the following .env files on your system containing sensible information:
 
  - djangoserver/.env
+ 
     ```
    DJANGO_SETTINGS_MODULE=quecolectivo.settings
    POSTGRES_DATABASE=<db-name> # name of the db
@@ -13,7 +14,9 @@
    POSTGRES_HOST=db # db for docker, or localhost if you are developing locally
    PGPASSWORD=<yourpassword> # password here
    ```
+   
 - djangoserver/quecolectivo/quecolectivo/settings_secret.py
+
     ```
     SECRET_KEY = <secret-key>  # replace with secret key
     ```
