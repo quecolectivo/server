@@ -75,3 +75,10 @@
     └── Dockerfile
 ```
 
+## Licence:
+
+This is Free Software, published under the GPL v3 LICENSE
+
+## How to contribute:
+
+We would love contributions, just submit an issue or join us in gitter, if you have any suggestions, please let us know.

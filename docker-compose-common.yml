@@ -1,0 +1,12 @@
+services:
+  db:
+    build: db
+    restart: always
+     
+  django:
+    build: djangoserver
+    restart: always
+
+  nginx:
+    build: nginx
+    restart: always

@@ -2,24 +2,27 @@ services:
   db:
     extends: docker-compose-common.yml
     # Publish the port so it's visible on the host, you can access the db directly
-    ports:
-      - "5432:5432"
+    expose:
+    # Expose port 5432 so it's only visibile on the container, not the host
+      - "5432"
     volumes: 
       - datavolume:/var/lib/postgresql/data 
      
   django:
     extends: docker-compose-common.yml
     environment:
-    # Environment variables to configure PGSQL on startup.
-    # We don't care about commiting these creds to GitHub because they're only
-    # for our local development environment
+    # Environment variables to configure pgsql on startup.
+    # Environment variables with only a key are resolved to their values on
+    # the machine Compose is running on. We do this to prevent ourselves
+    # from committing sensitive data to GitHub.
       - DJANGO_SETTINGS_MODULE=quecolectivo.settings
       - POSTGRES_DATABASE=laplata
-      - POSTGRES_USER=fede
-      - POSTGRES_HOST=localhost
-      - PGPASSWORD=fedefede
-    ports:
-      - "8000:8000"
+      - POSTGRES_HOST=db
+      - POSTGRES_USER
+      - PGPASSWORD
+    expose:
+    # Expose port 8000 so it's only visibile on the container, not the host
+      - "8000"
     depends_on:
       - db
     links:
