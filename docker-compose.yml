@@ -19,10 +19,11 @@ services:
     # We don't care about commiting these creds to GitHub because they're only
     # for our local development environment
       - DJANGO_SETTINGS_MODULE=quecolectivo.settings
-      - POSTGRES_DATABASE=laplata
+      - POSTGRES_DATABASE=quecolectivo
       - POSTGRES_USER=postgres
       - POSTGRES_HOST=db
       - PGPASSWORD=postgres
+      - DJANGO_SECRET_KEY=dev
     ports:
       - "8000:8000"
     depends_on:
@@ -33,8 +34,8 @@ services:
     # Mount the app dir in the container so our changes to the app code
     # are also changed in the container
       - ./djangoserver/quecolectivo:/code/quecolectivo
-    # command: bash wait-for-postgres.sh db gunicorn -w 8 --reload --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
-    command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
+    command: bash wait-for-postgres.sh db gunicorn -w 8 --reload --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
+    # command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
     # Run Gunicorn to serve app requests and reload on change so we can see our
     # changes to the app code
 
