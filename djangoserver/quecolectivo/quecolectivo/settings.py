@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
-from quecolectivo.settings_secret import *
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,9 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['nginx', '0.0.0.0', 'serianox.duckdns.org', 'localhost']
+ALLOWED_HOSTS = ['ec2-52-67-239-128.sa-east-1.compute.amazonaws.com', 'localhost']
 
 # Application definition
 
@@ -120,5 +120,6 @@ STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
-    '127.0.0.1:3000'
+    '127.0.0.1:3000',
+    'http://ec2-52-67-239-128.sa-east-1.compute.amazonaws.com'
 )
