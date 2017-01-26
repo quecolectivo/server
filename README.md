@@ -3,14 +3,6 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/quecolectivo/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
-### create the following files on your system containing sensible information:
-
-- djangoserver/quecolectivo/quecolectivo/settings_secret.py
-
-    ```
-    SECRET_KEY = <secret-key>  # replace with secret key
-    ```
-
 ### Docker dev setup assuming you have `docker` and `docker-compose` already installed on your system:
     
 - `docker-compose build`
@@ -40,11 +32,19 @@
 
 ## deploy to production
     
-- need to define the following env variables:
-    ```
-    POSTGRES_USER
-    PGPASSWORD
-    ```
+- need to define the following env variables: ` POSTGRES_USER, PGPASSWORD, DJANGO_SECRET_KEY `
+
+   you can do
+   ```
+   export POSTGRES_USER=$(hexdump -v -e '1/1 "%.2x"' -n 32 /dev/random)
+   export PGPASSWORD=$(hexdump -v -e '1/1 "%.2x"' -n 32 /dev/random)
+   export DJANGO_SECRET_KEY=$(hexdump -v -e '1/1 "%.2x"' -n 32 /dev/random)
+
+   echo "POSTGRES_USER=$POSTGRES_USER"
+   echo "PGPASSWORD=$PGPASSWORD"
+   echo "DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY"
+   ``` 
+
 - create a new amazonec2 instance with  
     `docker-machine create --driver amazonec2 --amazonec2-region sa-east-1 quecolectivo`
 
@@ -55,9 +55,9 @@
     ```
     docker-compose -f docker-compose-prod.yml build
     
-    POSTGRES_USER= <your-user> PGPASSWORD= <your-pwd> docker-compose -f docker-compose-prod.yml run --rm django bash initdb/init.sh
+    docker-compose -f docker-compose-prod.yml run --rm django bash initdb/init.sh
     
-    POSTGRES_USER= <your-user> PGPASSWORD= <your-pwd> docker-compose -f docker-compose-prod.yml up
+    docker-compose -f docker-compose-prod.yml up
     ``` 
 
 
