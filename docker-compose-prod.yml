@@ -28,13 +28,13 @@ services:
       - DJANGO_SECRET_KEY
     ports:
     # Expose port 8000 so it's only visibile on the container, not the host
-      - "8000:8000"
+      - "443:8000"
     depends_on:
       - db
     links:
       - db
-    # command: bash wait-for-postgres.sh db gunicorn --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
-    command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
+    command: bash wait-for-postgres.sh db gunicorn --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
+    # command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
     # Run Gunicorn to serve app requests and reload on change so we can see our
     # changes to the app code
 
