@@ -26,9 +26,9 @@ services:
       - POSTGRES_USER=postgres
       - PGPASSWORD
       - DJANGO_SECRET_KEY
-    ports:
+    expose:
     # Expose port 8000 so it's only visibile on the container, not the host
-      - "443:8000"
+      - "8000"
     depends_on:
       - db
     links:
