@@ -23,7 +23,7 @@ services:
       - DJANGO_SETTINGS_MODULE=quecolectivo.settings
       - POSTGRES_DATABASE=quecolectivo
       - POSTGRES_HOST=db
-      - POSTGRES_USER
+      - POSTGRES_USER=postgres
       - PGPASSWORD
       - DJANGO_SECRET_KEY
     ports:
@@ -33,8 +33,8 @@ services:
       - db
     links:
       - db
-    # command: bash wait-for-postgres.sh db gunicorn --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
-    command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
+    command: bash wait-for-postgres.sh db gunicorn --pythonpath '/code/quecolectivo/' quecolectivo.wsgi -b 0.0.0.0:8000
+    # command: bash wait-for-postgres.sh db python quecolectivo/manage.py runserver 0.0.0.0:8000
     # Run Gunicorn to serve app requests and reload on change so we can see our
     # changes to the app code
 
@@ -43,9 +43,11 @@ services:
       file: docker-compose-common.yml
       service: nginx
     ports:
-      - "80:80"
+      - "443:443"
     links:
       - django
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
 
 volumes:
   datavolume:
