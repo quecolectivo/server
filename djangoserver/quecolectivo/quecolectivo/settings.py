@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ec2-54-94-152-33.sa-east-1.compute.amazonaws.com', 'localhost']
+ALLOWED_HOSTS = ["quecolectivo.duckdns.org", 'localhost']
 
 # Application definition
 
@@ -121,5 +121,5 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
     '127.0.0.1:3000',
-    'http://ec2-52-67-239-128.sa-east-1.compute.amazonaws.com'
+    'quecolectivo.github.io'
 )

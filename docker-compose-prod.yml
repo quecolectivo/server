@@ -23,7 +23,7 @@ services:
       - DJANGO_SETTINGS_MODULE=quecolectivo.settings
       - POSTGRES_DATABASE=quecolectivo
       - POSTGRES_HOST=db
-      - POSTGRES_USER
+      - POSTGRES_USER=postgres
       - PGPASSWORD
       - DJANGO_SECRET_KEY
     ports:
@@ -43,9 +43,11 @@ services:
       file: docker-compose-common.yml
       service: nginx
     ports:
-      - "80:80"
+      - "443:443"
     links:
       - django
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
 
 volumes:
   datavolume:

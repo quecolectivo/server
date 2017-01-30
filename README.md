@@ -12,13 +12,13 @@
 - `docker-compose run --rm django bash initdb/init.sh` 
 
     this populates the db with data and sets up postgis. change the default .osm file accordingly for whatever zone you prefer, as well as the db name, etc.
-
+<!---
 #### do not run this migrations for now:
 - ~~`docker-compose run --rm django python quecolectivo/manage.py makemigrations`~~   
 - ~~`docker-compose run --rm django python quecolectivo/manage.py migrate`~~    
 
     runs django migrations on the db, sets up django tables, etc.
-    
+-->
 - `docker-compose up`
 
     your project should be up on localhost:8000, you can try to make a query like:
@@ -36,11 +36,9 @@
 
    you can do
    ```
-   export POSTGRES_USER=$(hexdump -v -e '1/1 "%.2x"' -n 32 /dev/random)
-   export PGPASSWORD=$(hexdump -v -e '1/1 "%.2x"' -n 32 /dev/random)
-   export DJANGO_SECRET_KEY=$(hexdump -v -e '1/1 "%.2x"' -n 32 /dev/random)
+   export PGPASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 80 ; echo '')
+   export DJANGO_SECRET_KEY=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 80 ; echo '')
 
-   echo "POSTGRES_USER=$POSTGRES_USER"
    echo "PGPASSWORD=$PGPASSWORD"
    echo "DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY"
    ``` 
