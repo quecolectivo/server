@@ -12,13 +12,7 @@
 - `docker-compose run --rm django bash initdb/init.sh` 
 
     this populates the db with data and sets up postgis. change the default .osm file accordingly for whatever zone you prefer, as well as the db name, etc.
-<!---
-#### do not run this migrations for now:
-- ~~`docker-compose run --rm django python quecolectivo/manage.py makemigrations`~~   
-- ~~`docker-compose run --rm django python quecolectivo/manage.py migrate`~~    
-
-    runs django migrations on the db, sets up django tables, etc.
--->
+    
 - `docker-compose up`
 
     your project should be up on localhost:8000, you can try to make a query like:
