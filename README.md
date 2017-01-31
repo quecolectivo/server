@@ -12,7 +12,7 @@
 - `docker-compose run --rm django bash initdb/init.sh` 
 
     this populates the db with data and sets up postgis. change the default .osm file accordingly for whatever zone you prefer, as well as the db name, etc.
-    
+
 - `docker-compose up`
 
     your project should be up on localhost:8000, you can try to make a query like:
@@ -24,7 +24,7 @@
     TODO
 
 
-## deploy to production
+### deploy to production
     
 - need to define the following env variables: ` POSTGRES_USER, PGPASSWORD, DJANGO_SECRET_KEY `
 
