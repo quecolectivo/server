@@ -26,6 +26,8 @@ services:
       - POSTGRES_USER=postgres
       - PGPASSWORD
       - DJANGO_SECRET_KEY
+    volumes:
+      - /tmp:/tmp
     expose:
     # Expose port 8000 so it's only visibile on the container, not the host
       - "8000"
@@ -44,10 +46,11 @@ services:
       service: nginx
     ports:
       - "443:443"
+      - "80:80"
     links:
       - django
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
+      - /etc/nginx/ssl/:/etc/nginx/ssl/
 
 volumes:
   datavolume:
