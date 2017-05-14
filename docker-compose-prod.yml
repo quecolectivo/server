@@ -50,7 +50,7 @@ services:
     links:
       - django
     volumes:
-      - /etc/nginx/ssl/:/etc/nginx/ssl/
+      - /etc/letsencrypt/archive/quecolectivo.duckdns.org:/etc/nginx/ssl/
 
 volumes:
   datavolume:
